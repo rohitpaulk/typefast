@@ -1,0 +1,9 @@
+.snippet-box-container {
+    min-height: 120px;
+}
+
+.snippet-box-container .snippet-text {
+    font-family: 'Open Sans';
+    font-size: 18px;
+    color: #333;
+}

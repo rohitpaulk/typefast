@@ -1,0 +1,17 @@
+.text-input-container {
+    margin-top: 50px;
+}
+
+.text-input-container textarea {
+    width: 100%;
+    height: 180px;
+    padding: 20px;
+    border: 1px #ddd solid;
+    border-radius: 5px;
+    resize: none;
+
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: #333;
+}
+
