@@ -5,5 +5,16 @@
 .snippet-box-container .snippet-text {
     font-family: 'Open Sans';
     font-size: 18px;
+}
+
+.snippet-box-container .snippet-text .char-correct {
+    color: #ccc;
+}
+
+.snippet-box-container .snippet-text .char-untyped {
     color: #333;
+}
+
+.snippet-box-container .snippet-text .char-wrong {
+    color: #C00;
 }
