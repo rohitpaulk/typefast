@@ -20,7 +20,7 @@ function getAverageSpeed(
     let firstLogTimestamp = keystrokeLogs[0].timestamp;
     let lastLogTimestamp = keystrokeLogs[keystrokeLogs.length-1].timestamp;
 
-    let durationMilliseconds = firstLogTimestamp.getTime() - lastLogTimestamp.getTime();
+    let durationMilliseconds = lastLogTimestamp.getTime() - firstLogTimestamp.getTime();
     let durationMinutes = durationMilliseconds / (1000 * 60);
 
     let charCount = snippetText.length;

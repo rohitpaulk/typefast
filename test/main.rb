@@ -3,13 +3,16 @@ Bundler.require(:default)
 
 SERVER_URL = "http://localhost:3000/"
 
-AVERAGE_WPM = 50;
+AVERAGE_WPM = 200;
 
 def get_human_delay_ms
   average_cpm = AVERAGE_WPM * 5
   average_cps = average_cpm / 60
   delay_seconds = 1/average_cps
-  1000 * delay_seconds
+  delay_ms = 1000 * delay_seconds
+  final = rand(2 * delay_ms)
+  puts final
+  final
 end
 
 def test_basic
@@ -32,7 +35,7 @@ def simulate_typing_with_mistakes(text, &trigger_key_block)
     simulate_mistakes(trigger_key_block) if rand(30) <= 1
 
     trigger_key_block.call(char)
-    sleep(get_human_delay_ms)
+    sleep(get_human_delay_ms / 1000)
   end
 end
 
@@ -42,7 +45,7 @@ def simulate_mistakes(trigger_key_block)
 
   mistake_keys.each do |char|
     trigger_key_block.call(char)
-    sleep(get_human_delay_ms)
+    sleep(get_human_delay_ms / 1000)
   end
 
   mistake_keys.each do |char|

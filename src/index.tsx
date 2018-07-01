@@ -22,6 +22,9 @@ abandonment."`;
 text = `Encouraging students to think critically -- to ask, "What
 if?" -- is a hallmark of the college writing classroom.`;
 
+// // Shortest version for testing
+// text = "hey";
+
 text = text.replace(/\n/gm, " ");
 
 ReactDOM.render(
