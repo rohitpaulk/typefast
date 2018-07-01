@@ -3,12 +3,14 @@
 }
 
 .snippet-box-container .snippet-text {
-    font-family: 'Open Sans';
+    font-family: 'Source Code Pro';
     font-size: 18px;
+    letter-spacing: 0.08ex;
+    line-height: 1.7em;
 }
 
 .snippet-box-container .snippet-text .char-correct {
-    color: #ccc;
+    color: #aaa;
 }
 
 .snippet-box-container .snippet-text .char-untyped {
@@ -17,4 +19,9 @@
 
 .snippet-box-container .snippet-text .char-wrong {
     color: #C00;
+    background-color: #ffb6c1;
+}
+
+.snippet-box-container .snippet-text .is-cursor {
+    border-bottom: 2px solid #396;
 }
