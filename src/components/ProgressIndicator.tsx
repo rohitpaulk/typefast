@@ -1,6 +1,8 @@
 import * as React from 'react';
 import './ProgressIndicator.css';
 
+import * as _ from "lodash";
+
 interface IProps { actualText: string; typedText: string }
 
 class ProgressIndicator extends React.Component<IProps, {}> {
@@ -9,11 +11,30 @@ class ProgressIndicator extends React.Component<IProps, {}> {
     }
 
     public getProgressPercentage() {
-        let actualLength = this.props.actualText.length;
-        let typedLength = this.props.typedText.length;
+        const actualChars = this.props.actualText.split('');
+        const typedChars = this.props.typedText.split('');
 
-        // TODO: Only count till the first mistake?
-        return (typedLength / actualLength) * 100;
+        // Duplicated from SnippetBox!
+        let completedUntilPos = 0;
+        let foundMistake = false;
+        _.each(actualChars, (value, index) => {
+            if (foundMistake) {
+                return;
+            }
+
+            if (typedChars[index] === undefined) {
+                return;
+            }
+
+            if (typedChars[index] !== actualChars[index]) {
+                foundMistake = true;
+                return;
+            }
+
+            completedUntilPos = index;
+        });
+
+        return (completedUntilPos / this.props.actualText.length) * 100;
     }
 
     public getStyles() {

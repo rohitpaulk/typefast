@@ -38,7 +38,7 @@ class LiveSnippetBox extends React.Component<ISnippetBoxProps, {}> {
             let status: CharacterStatus;
             if (index > cursorPos) {
                 status = CharacterStatus.Untyped;
-            } else if (firstMistakePos && (index >= firstMistakePos)) {
+            } else if (firstMistakePos != null && (index >= firstMistakePos)) {
                 status = CharacterStatus.Wrong;
             } else {
                 status = CharacterStatus.Correct;
