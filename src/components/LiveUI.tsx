@@ -1,12 +1,17 @@
 import * as React from 'react';
-import './App.css';
 
 import LiveSnippetBox from './LiveSnippetBox';
 import HiddenTextInput from './HiddenTextInput';
 import ProgressIndicator from './ProgressIndicator';
 import { KeystrokeRecorder } from '../lib/KeystrokeRecorder';
 
-interface ILiveUIProps { snippetText: string; }
+import { IKeystrokeLog } from '../lib/KeystrokeRecorder';
+
+interface ILiveUIProps {
+    snippetText: string;
+    onFinish: (keystrokes: IKeystrokeLog[]) => void;
+}
+
 interface ILiveUIState { typedText: string; }
 
 class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
@@ -24,6 +29,13 @@ class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
 
     public onTypedTextChange(newText: string) {
         this.setState({typedText: newText});
+        this.checkFinish()
+    }
+
+    public checkFinish() {
+        if (this.state.typedText === this.props.snippetText) {
+            this.props.onFinish(this.keystrokeRecorder.getKeystrokes());
+        }
     }
 
     public onCharacterKeypress(character: string) {

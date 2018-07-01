@@ -28,4 +28,4 @@ function getAverageSpeed(
     return cpm / 5;
 }
 
-export { getCompletedSnippetAnnotations };
+export default getCompletedSnippetAnnotations;
