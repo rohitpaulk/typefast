@@ -50,6 +50,7 @@ class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
         return (
             <div className="live-ui-container">
                 <HiddenTextInput
+                    maxLength={this.props.snippetText.length}
                     onChange={this.onTypedTextChange}
                     onCharacterKeypress={this.onCharacterKeypress}
                     onBackspaceKeypress={this.onBackspaceKeypress}

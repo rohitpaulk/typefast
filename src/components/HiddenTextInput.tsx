@@ -4,7 +4,8 @@ import './HiddenTextInput.css';
 interface IProps {
     onChange: (text: string) => void,
     onCharacterKeypress: (text: string) => void,
-    onBackspaceKeypress: () => void
+    onBackspaceKeypress: () => void,
+    maxLength: number
 }
 interface IState { text: string; }
 
@@ -46,6 +47,10 @@ class HiddenTextInput extends React.Component<IProps, IState> {
     }
 
     public handleCharacter(character: string) {
+        if (this.isAtMaxLength()) {
+            return
+        }
+
         this.props.onCharacterKeypress(character)
         this.changeText(this.state.text + character)
     }
@@ -53,6 +58,10 @@ class HiddenTextInput extends React.Component<IProps, IState> {
     public changeText(value: string) {
         this.setState({text: value});
         this.props.onChange(value);
+    }
+
+    public isAtMaxLength() {
+        return this.state.text.length == this.props.maxLength;
     }
 
     public render() {
