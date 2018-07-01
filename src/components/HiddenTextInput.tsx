@@ -1,7 +1,11 @@
 import * as React from 'react';
 import './HiddenTextInput.css';
 
-interface IProps { onChange: (text: string) => void }
+interface IProps {
+    onChange: (text: string) => void,
+    onCharacterKeypress: (text: string) => void,
+    onBackspaceKeypress: () => void
+}
 interface IState { text: string; }
 
 class HiddenTextInput extends React.Component<IProps, IState> {
@@ -37,11 +41,13 @@ class HiddenTextInput extends React.Component<IProps, IState> {
     }
 
     public handleBackspace() {
-        this.changeText(this.state.text.slice(0, -1));
+        this.props.onBackspaceKeypress()
+        this.changeText(this.state.text.slice(0, -1))
     }
 
     public handleCharacter(character: string) {
-        this.changeText(this.state.text + character);
+        this.props.onCharacterKeypress(character)
+        this.changeText(this.state.text + character)
     }
 
     public changeText(value: string) {

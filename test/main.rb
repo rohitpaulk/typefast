@@ -14,6 +14,8 @@ def test_basic
 
   simulate_typing_with_mistakes(snippet) { |c| body.send_keys(c) }
 
+  sleep 1
+
   driver.quit
 end
 

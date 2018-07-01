@@ -8,7 +8,7 @@ interface ISnippetBoxProps { actualText: string; typedText: string; }
 enum CharacterStatus { Correct, Wrong, Untyped };
 interface ICharacter { value: string; status: CharacterStatus };
 
-class SnippetBox extends React.Component<ISnippetBoxProps, {}> {
+class LiveSnippetBox extends React.Component<ISnippetBoxProps, {}> {
     public getCursorPos(): number {
         return this.props.typedText.length - 1;
     }
@@ -89,4 +89,4 @@ class SnippetBox extends React.Component<ISnippetBoxProps, {}> {
     }
 }
 
-export default SnippetBox;
+export default LiveSnippetBox;
