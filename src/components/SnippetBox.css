@@ -4,9 +4,9 @@
 
 .snippet-box-container .snippet-text {
     font-family: 'Source Code Pro';
-    font-size: 18px;
-    letter-spacing: 0.08ex;
-    line-height: 1.7em;
+    font-size: 20px;
+    letter-spacing: 0.06ex;
+    line-height: 1.8em;
 }
 
 .snippet-box-container .snippet-text .char-correct {

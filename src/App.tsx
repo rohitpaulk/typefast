@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 
 import SnippetBox from './components/SnippetBox';
-import TextInput from './components/TextInput';
+import HiddenTextInput from './components/HiddenTextInput';
 
 interface IAppProps { snippetText: string; }
 interface IAppState { typedText: string; }
@@ -24,7 +24,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 <SnippetBox
                     actualText={this.props.snippetText}
                     typedText={this.state.typedText} />
-                <TextInput onChange={this.onTypedTextChange} />
+                <HiddenTextInput onChange={this.onTypedTextChange} />
             </div>
         );
     }
