@@ -1,0 +1,14 @@
+.progress-indicator-container {
+    margin-top: 50px;
+}
+
+.progress-indicator {
+    height: 5px;
+    background-color: #ddd;
+}
+
+.progress-bar {
+    height: 5px;
+    width: 30%;
+    background-color: #396;
+}

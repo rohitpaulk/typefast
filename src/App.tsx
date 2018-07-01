@@ -3,6 +3,7 @@ import './App.css';
 
 import SnippetBox from './components/SnippetBox';
 import HiddenTextInput from './components/HiddenTextInput';
+import ProgressIndicator from './components/ProgressIndicator';
 
 interface IAppProps { snippetText: string; }
 interface IAppState { typedText: string; }
@@ -21,10 +22,13 @@ class App extends React.Component<IAppProps, IAppState> {
     public render() {
         return (
             <div className="app-container">
+                <HiddenTextInput onChange={this.onTypedTextChange} />
                 <SnippetBox
                     actualText={this.props.snippetText}
                     typedText={this.state.typedText} />
-                <HiddenTextInput onChange={this.onTypedTextChange} />
+                <ProgressIndicator
+                    actualText={this.props.snippetText}
+                    typedText={this.state.typedText} />
             </div>
         );
     }
