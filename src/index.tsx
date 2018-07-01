@@ -18,6 +18,10 @@ writes "Earning a degree is seen as a route to upward mobility even as
 identification with the university is perceived as a kind of cultural
 abandonment."`;
 
+// Shorter version for testing
+text = `Encouraging students to think critically -- to ask, "What
+if?" -- is a hallmark of the college writing classroom.`;
+
 text = text.replace(/\n/gm, " ");
 
 ReactDOM.render(

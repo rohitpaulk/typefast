@@ -22,6 +22,11 @@ class App extends React.Component<IAppProps, IAppState> {
     public render() {
         return (
             <div className="app-container">
+                <input
+                    type="hidden"
+                    value={this.props.snippetText}
+                    id="raw-snippet" />
+
                 <HiddenTextInput onChange={this.onTypedTextChange} />
                 <SnippetBox
                     actualText={this.props.snippetText}

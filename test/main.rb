@@ -1,0 +1,48 @@
+require 'bundler'
+Bundler.require(:default)
+
+SERVER_URL = "http://localhost:3000/"
+
+def test_basic
+  driver = Selenium::WebDriver.for(:firefox)
+  driver.navigate.to SERVER_URL
+
+  focus_browser
+
+  snippet = driver.find_element(id: "raw-snippet").attribute("value")
+  body = driver.find_element(css: "body")
+
+  simulate_typing_with_mistakes(snippet) { |c| body.send_keys(c) }
+
+  driver.quit
+end
+
+def simulate_typing_with_mistakes(text, &trigger_key_block)
+  text.each_char do |char|
+    simulate_mistakes(trigger_key_block) if rand(30) <= 1
+
+    trigger_key_block.call(char)
+    sleep(rand(100) * 0.001) # Random sleep, 0 - 50 ms
+  end
+end
+
+def simulate_mistakes(trigger_key_block)
+  n_mistakes = rand(10)
+  mistake_keys = [*('A'..'Z')].sample(n_mistakes)
+
+  mistake_keys.each do |char|
+    trigger_key_block.call(char)
+    sleep(rand(100) * 0.001) # Random sleep, 0 - 50 ms
+  end
+
+  mistake_keys.each do |char|
+    trigger_key_block.call(:backspace)
+    sleep(0.01)
+  end
+end
+
+def focus_browser
+  `osascript -e 'tell app "Firefox" to activate'`
+end
+
+test_basic()
