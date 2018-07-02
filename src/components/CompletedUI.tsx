@@ -16,9 +16,7 @@ class CompletedUI extends React.Component<ICompletedUIProps, {}> {
             <div className="live-ui-container">
                 <CompletedSnippetBox
                     snippetText={this.props.snippetText} />
-                <ProgressIndicator
-                    actualText={this.props.snippetText}
-                    typedText={this.props.snippetText} />
+                <ProgressIndicator percentage={100} />
                 <DebugStats
                     snippetText={this.props.snippetText}
                     keystrokes={this.props.keystrokes} />

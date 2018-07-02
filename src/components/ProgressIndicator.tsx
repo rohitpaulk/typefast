@@ -1,45 +1,16 @@
 import * as React from 'react';
 import './ProgressIndicator.css';
 
-import * as _ from "lodash";
-
-interface IProps { actualText: string; typedText: string }
+interface IProps { percentage: number }
 
 class ProgressIndicator extends React.Component<IProps, {}> {
     constructor(props: IProps) {
         super(props)
     }
 
-    public getProgressPercentage() {
-        const actualChars = this.props.actualText.split('');
-        const typedChars = this.props.typedText.split('');
-
-        // Duplicated from SnippetBox!
-        let completedUntilPos = 0;
-        let foundMistake = false;
-        _.each(actualChars, (value, index) => {
-            if (foundMistake) {
-                return;
-            }
-
-            if (typedChars[index] === undefined) {
-                return;
-            }
-
-            if (typedChars[index] !== actualChars[index]) {
-                foundMistake = true;
-                return;
-            }
-
-            completedUntilPos = index;
-        });
-
-        return (completedUntilPos / this.props.actualText.length) * 100;
-    }
-
     public getStyles() {
         return {
-            'width': this.getProgressPercentage() + '%'
+            'width': this.props.percentage + '%'
         }
     }
 

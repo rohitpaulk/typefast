@@ -1,6 +1,8 @@
 import * as React from 'react';
 import './SnippetBox.css';
 
+import LiveSnippetAnalyzer from '../lib/LiveSnippetAnalyzer';
+
 import * as _ from "lodash";
 
 interface ISnippetBoxProps { actualText: string; typedText: string; }
@@ -9,30 +11,30 @@ enum CharacterStatus { Correct, Wrong, Untyped };
 interface ICharacter { value: string; status: CharacterStatus };
 
 class LiveSnippetBox extends React.Component<ISnippetBoxProps, {}> {
-    public getCursorPos(): number {
-        return this.props.typedText.length - 1;
+    public constructor(props: ISnippetBoxProps) {
+        super(props)
+    }
+
+    public liveSnippetAnalyzer(): LiveSnippetAnalyzer {
+        return new LiveSnippetAnalyzer(
+            this.props.actualText,
+            this.props.typedText
+        )
+    }
+
+    public getCursorIndex(): number {
+        return this.liveSnippetAnalyzer().cursorIndex()
+    }
+
+    public getFirstMistakeIndex(): number | null {
+        return this.liveSnippetAnalyzer().firstMistakeIndex()
     }
 
     public getCharacters(): ICharacter[] {
         const actualChars = this.props.actualText.split('');
-        const typedChars = this.props.typedText.split('');
+        const firstMistakePos = this.getFirstMistakeIndex()
+        const cursorPos = this.getCursorIndex();
 
-        let firstMistakePos: number | null = null;
-        _.each(actualChars, (value, index) => {
-            if (firstMistakePos) {
-                return;
-            }
-
-            if (typedChars[index] === undefined) {
-                return;
-            }
-
-            if (typedChars[index] !== actualChars[index]) {
-                firstMistakePos = index;
-            }
-        });
-
-        const cursorPos = this.getCursorPos();
         const characters: ICharacter[] = [];
         _.each(actualChars, function(value, index) {
             let status: CharacterStatus;
@@ -51,7 +53,7 @@ class LiveSnippetBox extends React.Component<ISnippetBoxProps, {}> {
     }
 
     public getSpans() {
-        const cursorPos = this.getCursorPos();
+        const cursorPos = this.getCursorIndex();
         const spans: JSX.Element[] = [];
 
         _.each(this.getCharacters(), (character, index) => {

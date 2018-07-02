@@ -26,7 +26,6 @@ def test_basic
 
   simulate_typing_with_mistakes(snippet) { |c| body.send_keys(c) }
 
-  binding.pry
   driver.quit
 end
 

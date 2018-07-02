@@ -4,6 +4,7 @@ import LiveSnippetBox from './LiveSnippetBox';
 import HiddenTextInput from './HiddenTextInput';
 import ProgressIndicator from './ProgressIndicator';
 import { KeystrokeRecorder } from '../lib/KeystrokeRecorder';
+import LiveSnippetAnalyzer from '../lib/LiveSnippetAnalyzer';
 
 import { IKeystrokeLog } from '../lib/KeystrokeRecorder';
 
@@ -16,6 +17,7 @@ interface ILiveUIState { typedText: string; }
 
 class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
     keystrokeRecorder: KeystrokeRecorder
+    liveSnippetAnalyzer: LiveSnippetAnalyzer
 
     constructor(props: ILiveUIProps) {
         super(props);
@@ -23,17 +25,27 @@ class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
         this.onTypedTextChange = this.onTypedTextChange.bind(this)
 
         this.keystrokeRecorder = new KeystrokeRecorder()
+        this.liveSnippetAnalyzer = new LiveSnippetAnalyzer(
+            this.props.snippetText,
+            this.state.typedText
+        )
         this.onCharacterKeypress = this.onCharacterKeypress.bind(this)
         this.onBackspaceKeypress = this.onBackspaceKeypress.bind(this)
     }
 
     public onTypedTextChange(newText: string) {
         this.setState({typedText: newText});
+
+        // Could improve perf by incrementally generating stats
+        this.liveSnippetAnalyzer = new LiveSnippetAnalyzer(
+            this.props.snippetText,
+            this.state.typedText
+        )
         this.checkFinish()
     }
 
     public checkFinish() {
-        if (this.state.typedText === this.props.snippetText) {
+        if (this.liveSnippetAnalyzer.isFinished()) {
             this.props.onFinish(this.keystrokeRecorder.getKeystrokes());
         }
     }
@@ -44,6 +56,10 @@ class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
 
     public onBackspaceKeypress() {
         this.keystrokeRecorder.recordBackspace();
+    }
+
+    public percentageCompleted() {
+        return this.liveSnippetAnalyzer.percentageCompleted();
     }
 
     public render() {
@@ -58,9 +74,7 @@ class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
                 <LiveSnippetBox
                     actualText={this.props.snippetText}
                     typedText={this.state.typedText} />
-                <ProgressIndicator
-                    actualText={this.props.snippetText}
-                    typedText={this.state.typedText} />
+                <ProgressIndicator percentage={this.percentageCompleted()} />
             </div>
         );
     }
