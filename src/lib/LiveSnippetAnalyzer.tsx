@@ -36,30 +36,16 @@ class LiveSnippetAnalyzer {
     }
 
     public percentageCompleted(): number {
-        // TODO: Simplify this to use cursor / firstMistake?
-        const actualChars = this.actualText.split('');
-        const typedChars = this.typedText.split('');
+        let firstMistakeIndex = this.firstMistakeIndex()
 
-        let completedUntilPos = -1;
-        let foundMistake = false;
-        _.each(actualChars, (value, index) => {
-            if (foundMistake) {
-                return;
-            }
+        let completedUntilIndex = -1;
+        if (firstMistakeIndex !== null) {
+            completedUntilIndex = firstMistakeIndex
+        } else {
+            completedUntilIndex = this.cursorIndex()
+        }
 
-            if (typedChars[index] === undefined) {
-                return;
-            }
-
-            if (typedChars[index] !== actualChars[index]) {
-                foundMistake = true;
-                return;
-            }
-
-            completedUntilPos = index;
-        });
-
-        return ((completedUntilPos + 1) / this.actualText.length) * 100;
+        return ((completedUntilIndex + 1) / this.actualText.length) * 100;
     }
 
     public isFinished() {
