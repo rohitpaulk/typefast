@@ -14,11 +14,19 @@ class ProgressIndicator extends React.Component<IProps, {}> {
         }
     }
 
+    public getClassNames() {
+        if (this.props.percentage == 100) {
+            return 'progress-bar completed';
+        } else {
+            return 'progress-bar'
+        }
+    }
+
     public render() {
         return (
             <div className="progress-indicator-container">
                 <div className="progress-indicator">
-                    <div className="progress-bar" style={this.getStyles()} />
+                    <div className={this.getClassNames()} style={this.getStyles()} />
                 </div>
             </div>
         );

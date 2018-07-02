@@ -12,3 +12,25 @@
     width: 30%;
     background-color: #396;
 }
+
+.progress-bar.completed {
+    animation-duration: 1000ms;
+    animation-name: glow;
+}
+
+@keyframes glow {
+    from {
+        background-color: #396;
+        box-shadow: #51c78c 0px 0px 0px;
+    }
+
+    50% {
+        background-color: #51c78c;
+        box-shadow: #51c78c 0px 0px 3px;
+    }
+
+    to {
+        background-color: #396;
+        box-shadow: #51c78c 0px 0px 0px;
+    }
+}

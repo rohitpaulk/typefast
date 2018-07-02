@@ -17,7 +17,6 @@ interface ILiveUIState { typedText: string; }
 
 class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
     keystrokeRecorder: KeystrokeRecorder
-    liveSnippetAnalyzer: LiveSnippetAnalyzer
 
     constructor(props: ILiveUIProps) {
         super(props);
@@ -25,27 +24,24 @@ class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
         this.onTypedTextChange = this.onTypedTextChange.bind(this)
 
         this.keystrokeRecorder = new KeystrokeRecorder()
-        this.liveSnippetAnalyzer = new LiveSnippetAnalyzer(
-            this.props.snippetText,
-            this.state.typedText
-        )
         this.onCharacterKeypress = this.onCharacterKeypress.bind(this)
         this.onBackspaceKeypress = this.onBackspaceKeypress.bind(this)
     }
 
-    public onTypedTextChange(newText: string) {
-        this.setState({typedText: newText});
-
-        // Could improve perf by incrementally generating stats
-        this.liveSnippetAnalyzer = new LiveSnippetAnalyzer(
+    public liveSnippetAnalyzer(): LiveSnippetAnalyzer {
+        return new LiveSnippetAnalyzer(
             this.props.snippetText,
             this.state.typedText
         )
+    }
+
+    public onTypedTextChange(newText: string) {
+        this.setState({typedText: newText});
         this.checkFinish()
     }
 
     public checkFinish() {
-        if (this.liveSnippetAnalyzer.isFinished()) {
+        if (this.liveSnippetAnalyzer().isFinished()) {
             this.props.onFinish(this.keystrokeRecorder.getKeystrokes());
         }
     }
@@ -59,7 +55,7 @@ class LiveUI extends React.Component<ILiveUIProps, ILiveUIState> {
     }
 
     public percentageCompleted() {
-        return this.liveSnippetAnalyzer.percentageCompleted();
+        return this.liveSnippetAnalyzer().percentageCompleted();
     }
 
     public render() {

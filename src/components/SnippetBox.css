@@ -25,3 +25,7 @@
 .snippet-box-container .snippet-text .is-cursor {
     border-bottom: 2px solid #396;
 }
+
+.snippet-box-container .snippet-text .completed-text {
+    color: #555;
+}

@@ -1,0 +1,14 @@
+.completed-stats-container {
+    font-family: "Open Sans";
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    animation-duration: 2000ms;
+    animation-name: fade-in;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    50% { opacity: 0.75; }
+    to { opacity: 1; }
+}

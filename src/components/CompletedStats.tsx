@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './ProgressIndicator.css';
+import './CompletedStats.css';
 
 import { IKeystrokeLog } from '../lib/KeystrokeRecorder';
 import CompletedSnippetAnalyzer from '../lib/CompletedSnippetAnalyzer';
@@ -14,7 +14,7 @@ class CompletedStats extends React.Component<IProps, {}> {
         super(props)
     }
 
-    public completedSnippetAnalyzer(): CompletedSnippetAnalyzer {
+    public completedSnippetAnalyzer() {
         return new CompletedSnippetAnalyzer(
             this.props.snippetText,
             this.props.keystrokes
@@ -27,9 +27,9 @@ class CompletedStats extends React.Component<IProps, {}> {
 
     public render() {
         return (
-            <div className="debug-stats-container">
-                Impressive! Your average speed is
-                <b>{this.getAverageSpeed()}</b> words per minute.
+            <div className="completed-stats-container">
+                Impressive! Your average speed is <b>
+                {this.getAverageSpeed()}</b> words per minute.
             </div>
         );
     }
