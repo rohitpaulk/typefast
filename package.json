@@ -12,14 +12,16 @@
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.2",
+    "@types/jest": "^23.3.9",
     "@types/node": "^10.3.6",
     "@types/react": "^16.4.2",
     "@types/react-dom": "^16.0.6",
-    "typescript": "^2.9.2"
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.4",
+    "typescript": "^3.1.6"
   }
 }
