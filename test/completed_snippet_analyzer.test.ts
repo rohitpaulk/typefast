@@ -50,7 +50,7 @@ function dummyAnalyzerWithOneMistake() {
         char_with_delay("c", 200),
         backspace_with_delay(300),
         char_with_delay("b", 400),
-        char_with_delay("c", 400),
+        char_with_delay("c", 450),
         char_with_delay("d", 600),
         char_with_delay("e", 800),
         char_with_delay("f", 1000)
@@ -59,6 +59,11 @@ function dummyAnalyzerWithOneMistake() {
 
 it("averageSpeed", () => {
     let analyzer = dummyAnalyzer();
+    expect(analyzer.averageSpeed()).toEqual(60);
+});
+
+it("averageSpeed with one mistake", () => {
+    let analyzer = dummyAnalyzerWithOneMistake();
     expect(analyzer.averageSpeed()).toEqual(60);
 });
 
