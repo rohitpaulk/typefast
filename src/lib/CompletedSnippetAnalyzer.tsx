@@ -31,20 +31,12 @@ class CompletedSnippetAnalyzer {
     }
 
     public mistakeIndices(): number[] {
-        var currentIndex = 0;
         var mistakeIndices: number[] = [];
-        var lastIndexWasMistake = false;
-        _.forEach(this.keystrokeLogs, function(log) {
-            if (log.key.type == "backspace" && !lastIndexWasMistake) {
-                mistakeIndices.push(currentIndex - 1);
-            }
+        let groupedLogs = this.logsGroupedBySnippetIndex();
 
-            if (log.key.type == "character") {
-                lastIndexWasMistake = false;
-                currentIndex += 1;
-            } else if (log.key.type == "backspace") {
-                currentIndex -= 1;
-                lastIndexWasMistake = true;
+        _.forEach(groupedLogs, function(logs, snippetIndex) {
+            if (_.some(logs, log => log.key.type == "backspace")) {
+                mistakeIndices.push(snippetIndex);
             }
         });
 
@@ -53,6 +45,29 @@ class CompletedSnippetAnalyzer {
 
     public mistakeCount(): number {
         return this.mistakeIndices().length;
+    }
+
+    public logsGroupedBySnippetIndex(): IKeystrokeLog[][] {
+        let logsGroupedBySnippetIndex: IKeystrokeLog[][] = [];
+        let remainingLogs: IKeystrokeLog[] = this.keystrokeLogs.slice();
+        let snippetChars = this.snippetText.split("");
+        _.forEach(snippetChars, function(char, index) {
+            let doesNotMatchChar = function(log: IKeystrokeLog): boolean {
+                return !(
+                    log.key.type == "character" && log.key.character == char
+                );
+            };
+
+            let logsForIndex = _.takeWhile(remainingLogs, doesNotMatchChar);
+            if (remainingLogs.length > 0) {
+                logsForIndex.push(remainingLogs.shift()!);
+            }
+
+            logsGroupedBySnippetIndex[index] = logsForIndex;
+            remainingLogs = _.drop(remainingLogs, logsForIndex.length);
+        });
+
+        return logsGroupedBySnippetIndex;
     }
 }
 

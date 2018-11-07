@@ -1,12 +1,12 @@
 import CompletedSnippetAnalyzer from "../src/lib/CompletedSnippetAnalyzer";
 
-it("averageSpeed", () => {
+function dummyAnalyzer() {
     // 60wpm = 300cpm
     // 300cpm = 5cps
     // 5cps = 5c per 1000 ms
     // 5c per 1000 ms = ~ 250 ms delay (excluding first) between each character
     let startTime = new Date();
-    let analyzer = new CompletedSnippetAnalyzer("abcde", [
+    return new CompletedSnippetAnalyzer("abcde", [
         {
             key: { type: "character", character: "a" },
             timestamp: ms_from_date(startTime, 0)
@@ -28,8 +28,17 @@ it("averageSpeed", () => {
             timestamp: ms_from_date(startTime, 1000)
         }
     ]);
+}
 
+it("averageSpeed", () => {
+    let analyzer = dummyAnalyzer();
     expect(analyzer.averageSpeed()).toEqual(60);
+});
+
+it("speedAtIndices", () => {
+    let analyzer = dummyAnalyzer();
+    // TODO
+    expect(analyzer.speedsAtIndices()).toEqual([0]);
 });
 
 it("mistakeIndices with no mistakes", () => {
