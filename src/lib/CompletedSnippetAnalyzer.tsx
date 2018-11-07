@@ -43,8 +43,6 @@ class CompletedSnippetAnalyzer {
             }
         });
 
-        debugger;
-
         return speedsAtIndices;
     }
 
@@ -77,12 +75,12 @@ class CompletedSnippetAnalyzer {
             };
 
             let logsForIndex = _.takeWhile(remainingLogs, doesNotMatchChar);
+            remainingLogs = _.drop(remainingLogs, logsForIndex.length);
             if (remainingLogs.length > 0) {
-                logsForIndex.push(_.first(remainingLogs)!);
+                logsForIndex.push(remainingLogs.shift()!);
             }
 
             logsGroupedBySnippetIndex[index] = logsForIndex;
-            remainingLogs = _.drop(remainingLogs, logsForIndex.length);
         });
 
         return logsGroupedBySnippetIndex;

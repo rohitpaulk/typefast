@@ -72,6 +72,11 @@ it("speedAtIndices", () => {
     expect(analyzer.speedsAtIndices()).toEqual([0, 60, 60, 60, 60, 60]);
 });
 
+it("speedAtIndices with one mistake", () => {
+    let analyzer = dummyAnalyzerWithOneMistake();
+    expect(analyzer.speedsAtIndices()).toEqual([0, 30, 53, 60, 60, 60]);
+});
+
 it("mistakeIndices with no mistakes", () => {
     let analyzer = dummyAnalyzer();
     expect(analyzer.mistakeIndices()).toEqual([]);
