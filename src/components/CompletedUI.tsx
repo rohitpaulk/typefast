@@ -14,7 +14,7 @@ interface ICompletedUIProps {
 class CompletedUI extends React.Component<ICompletedUIProps, {}> {
     public render() {
         return (
-            <div className="live-ui-container">
+            <div className="completed-ui-container">
                 <CompletedSnippetBox
                     snippetText={this.props.snippetText} />
                 <ProgressIndicator percentage={100} />

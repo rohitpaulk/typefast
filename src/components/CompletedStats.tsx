@@ -25,11 +25,16 @@ class CompletedStats extends React.Component<IProps, {}> {
         return this.completedSnippetAnalyzer().averageSpeed()
     }
 
+    public getMistakeCount(): number {
+        return this.completedSnippetAnalyzer().mistakeCount()
+    }
+
     public render() {
         return (
             <div className="completed-stats-container">
                 Impressive! Your average speed is <b>
                 {this.getAverageSpeed()}</b> words per minute.
+                You made {this.getMistakeCount()} mistakes.
             </div>
         );
     }

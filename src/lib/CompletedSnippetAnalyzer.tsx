@@ -1,4 +1,5 @@
 import { IKeystrokeLog } from './KeystrokeRecorder';
+import * as _ from "lodash";
 
 class CompletedSnippetAnalyzer {
     snippetText: string
@@ -22,6 +23,31 @@ class CompletedSnippetAnalyzer {
         let cpm = charCount / durationMinutes;
 
         return Math.round(cpm / 5);
+    }
+
+    public mistakeIndices(): number[] {
+        var currentIndex = 0;
+        var mistakeIndices: number[] = [];
+        var lastIndexWasMistake = false;
+        _.forEach(this.keystrokeLogs, function(log) {
+            if (log.key.type == "character") {
+                lastIndexWasMistake = false;
+                currentIndex += 1;
+            } else if (log.key.type == "backspace") {
+                currentIndex -= 1;
+                lastIndexWasMistake = true;
+            }
+
+            if (!lastIndexWasMistake && log.key.type == "backspace") {
+                mistakeIndices.push(currentIndex)
+            }
+        });
+
+        return mistakeIndices;
+    }
+
+    public mistakeCount(): number {
+        return this.mistakeIndices().length;
     }
 }
 
