@@ -30,16 +30,16 @@ class CompletedSnippetAnalyzer {
         var mistakeIndices: number[] = [];
         var lastIndexWasMistake = false;
         _.forEach(this.keystrokeLogs, function(log) {
+            if (log.key.type == "backspace" && !lastIndexWasMistake) {
+                mistakeIndices.push(currentIndex - 1)
+            }
+
             if (log.key.type == "character") {
                 lastIndexWasMistake = false;
                 currentIndex += 1;
             } else if (log.key.type == "backspace") {
                 currentIndex -= 1;
                 lastIndexWasMistake = true;
-            }
-
-            if (!lastIndexWasMistake && log.key.type == "backspace") {
-                mistakeIndices.push(currentIndex)
             }
         });
 

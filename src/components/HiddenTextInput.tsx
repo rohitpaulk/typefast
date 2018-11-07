@@ -30,15 +30,19 @@ class HiddenTextInput extends React.Component<IProps, IState> {
     public handleKeyDown(e: KeyboardEvent) {
         if (e.key == 'Backspace') {
             this.handleBackspace()
+            e.preventDefault()
         }
     }
 
     public handleKeyPress(e: KeyboardEvent) {
         // Hack! All non-printable chars seem to have a 'key' value that is
         // longer than one character
-        if (e.key.length == 1) {
-            this.handleCharacter(e.key)
+        if (e.key.length != 1) {
+            return
         }
+
+        this.handleCharacter(e.key)
+        e.preventDefault()
     }
 
     public handleBackspace() {
