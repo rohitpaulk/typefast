@@ -26,6 +26,37 @@ function dummyAnalyzer() {
     ]);
 }
 
+function dummyAnalyzerWithOneMistake() {
+    let startTime = new Date();
+    let char_with_delay = function(
+        char: string,
+        delayInMilliseconds: number
+    ): IKeystrokeLog {
+        return {
+            key: { type: "character", character: char },
+            timestamp: ms_from_date(startTime, delayInMilliseconds)
+        };
+    };
+    let backspace_with_delay = function(
+        delayInMilliseconds: number
+    ): IKeystrokeLog {
+        return {
+            key: { type: "backspace" },
+            timestamp: ms_from_date(startTime, delayInMilliseconds)
+        };
+    };
+    return new CompletedSnippetAnalyzer("abcdef", [
+        char_with_delay("a", 0),
+        char_with_delay("c", 200),
+        backspace_with_delay(300),
+        char_with_delay("b", 400),
+        char_with_delay("c", 400),
+        char_with_delay("d", 600),
+        char_with_delay("e", 800),
+        char_with_delay("f", 1000)
+    ]);
+}
+
 it("averageSpeed", () => {
     let analyzer = dummyAnalyzer();
     expect(analyzer.averageSpeed()).toEqual(60);
@@ -42,16 +73,7 @@ it("mistakeIndices with no mistakes", () => {
 });
 
 it("mistakeIndices with one mistake", () => {
-    let analyzer = new CompletedSnippetAnalyzer("abcde", [
-        { key: { type: "character", character: "a" }, timestamp: new Date() },
-        { key: { type: "character", character: "c" }, timestamp: new Date() },
-        { key: { type: "backspace" }, timestamp: new Date() },
-        { key: { type: "character", character: "b" }, timestamp: new Date() },
-        { key: { type: "character", character: "c" }, timestamp: new Date() },
-        { key: { type: "character", character: "d" }, timestamp: new Date() },
-        { key: { type: "character", character: "e" }, timestamp: new Date() }
-    ]);
-
+    let analyzer = dummyAnalyzerWithOneMistake();
     expect(analyzer.mistakeIndices()).toEqual([1]);
 });
 
