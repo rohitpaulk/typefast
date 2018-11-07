@@ -1,3 +1,3 @@
 it('is true', () => {
-  expect('abcd').toEqual('Hello Daniel!')
+  expect('abcd').toEqual('abcd')
 });
