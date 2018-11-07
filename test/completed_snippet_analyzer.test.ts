@@ -1,4 +1,5 @@
 import CompletedSnippetAnalyzer from "../src/lib/CompletedSnippetAnalyzer";
+import { IKeystrokeLog } from "../src/lib/KeystrokeRecorder";
 
 function dummyAnalyzer() {
     // 60wpm = 300cpm
@@ -6,31 +7,22 @@ function dummyAnalyzer() {
     // 5cps = 5c per 1000 ms
     // 5c per 1000 ms = ~ 200ms
     let startTime = new Date();
+    let char_with_delay = function(
+        char: string,
+        delayInMilliseconds: number
+    ): IKeystrokeLog {
+        return {
+            key: { type: "character", character: char },
+            timestamp: ms_from_date(startTime, delayInMilliseconds)
+        };
+    };
     return new CompletedSnippetAnalyzer("abcdef", [
-        {
-            key: { type: "character", character: "a" },
-            timestamp: ms_from_date(startTime, 0)
-        },
-        {
-            key: { type: "character", character: "b" },
-            timestamp: ms_from_date(startTime, 200)
-        },
-        {
-            key: { type: "character", character: "c" },
-            timestamp: ms_from_date(startTime, 400)
-        },
-        {
-            key: { type: "character", character: "d" },
-            timestamp: ms_from_date(startTime, 600)
-        },
-        {
-            key: { type: "character", character: "e" },
-            timestamp: ms_from_date(startTime, 800)
-        },
-        {
-            key: { type: "character", character: "f" },
-            timestamp: ms_from_date(startTime, 1000)
-        }
+        char_with_delay("a", 0),
+        char_with_delay("b", 200),
+        char_with_delay("c", 400),
+        char_with_delay("d", 600),
+        char_with_delay("e", 800),
+        char_with_delay("f", 1000)
     ]);
 }
 
@@ -45,14 +37,7 @@ it("speedAtIndices", () => {
 });
 
 it("mistakeIndices with no mistakes", () => {
-    let analyzer = new CompletedSnippetAnalyzer("abcde", [
-        { key: { type: "character", character: "a" }, timestamp: new Date() },
-        { key: { type: "character", character: "b" }, timestamp: new Date() },
-        { key: { type: "character", character: "c" }, timestamp: new Date() },
-        { key: { type: "character", character: "d" }, timestamp: new Date() },
-        { key: { type: "character", character: "e" }, timestamp: new Date() }
-    ]);
-
+    let analyzer = dummyAnalyzer();
     expect(analyzer.mistakeIndices()).toEqual([]);
 });
 
