@@ -27,7 +27,31 @@ class CompletedSnippetAnalyzer {
     }
 
     public speedsAtIndices(): number[] {
-        return [0];
+        let groupedLogs = this.logsGroupedBySnippetIndex();
+
+        let finalTimestamps = _.map(groupedLogs, function(
+            logs: IKeystrokeLog[],
+            snippetIndex
+        ) {
+            return _.last(logs)!.timestamp;
+        });
+
+        let speedsAtIndices = _.map(finalTimestamps, function(
+            timestamp,
+            snippetIndex
+        ) {
+            if (snippetIndex == 0) {
+                return 0;
+            } else {
+                return calculateRollingAvgSpeed(
+                    finalTimestamps.slice(0, snippetIndex + 1)
+                );
+            }
+        });
+
+        debugger;
+
+        return speedsAtIndices;
     }
 
     public mistakeIndices(): number[] {
@@ -60,7 +84,7 @@ class CompletedSnippetAnalyzer {
 
             let logsForIndex = _.takeWhile(remainingLogs, doesNotMatchChar);
             if (remainingLogs.length > 0) {
-                logsForIndex.push(remainingLogs.shift()!);
+                logsForIndex.push(_.first(remainingLogs)!);
             }
 
             logsGroupedBySnippetIndex[index] = logsForIndex;
@@ -69,6 +93,25 @@ class CompletedSnippetAnalyzer {
 
         return logsGroupedBySnippetIndex;
     }
+}
+
+function calculateRollingAvgSpeed(previousTimestamps: Date[]): number {
+    if (previousTimestamps.length > 5) {
+        previousTimestamps = previousTimestamps.slice(0, 5);
+    }
+
+    let lastTimestamp = _.last(previousTimestamps)!;
+    let firstTimestamp = _.first(previousTimestamps)!;
+
+    let durationMilliseconds =
+        lastTimestamp.getTime() - firstTimestamp.getTime();
+
+    let durationMinutes = durationMilliseconds / (1000 * 60);
+
+    let charCount = previousTimestamps.length - 1;
+    let cpm = charCount / durationMinutes;
+
+    return Math.round(cpm / 5);
 }
 
 export default CompletedSnippetAnalyzer;

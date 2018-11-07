@@ -4,27 +4,31 @@ function dummyAnalyzer() {
     // 60wpm = 300cpm
     // 300cpm = 5cps
     // 5cps = 5c per 1000 ms
-    // 5c per 1000 ms = ~ 250 ms delay (excluding first) between each character
+    // 5c per 1000 ms = ~ 200ms
     let startTime = new Date();
-    return new CompletedSnippetAnalyzer("abcde", [
+    return new CompletedSnippetAnalyzer("abcdef", [
         {
             key: { type: "character", character: "a" },
             timestamp: ms_from_date(startTime, 0)
         },
         {
             key: { type: "character", character: "b" },
-            timestamp: ms_from_date(startTime, 210)
+            timestamp: ms_from_date(startTime, 200)
         },
         {
             key: { type: "character", character: "c" },
-            timestamp: ms_from_date(startTime, 390)
+            timestamp: ms_from_date(startTime, 400)
         },
         {
             key: { type: "character", character: "d" },
-            timestamp: ms_from_date(startTime, 680)
+            timestamp: ms_from_date(startTime, 600)
         },
         {
-            key: { type: "character", character: "d" },
+            key: { type: "character", character: "e" },
+            timestamp: ms_from_date(startTime, 800)
+        },
+        {
+            key: { type: "character", character: "f" },
             timestamp: ms_from_date(startTime, 1000)
         }
     ]);
@@ -37,8 +41,7 @@ it("averageSpeed", () => {
 
 it("speedAtIndices", () => {
     let analyzer = dummyAnalyzer();
-    // TODO
-    expect(analyzer.speedsAtIndices()).toEqual([0]);
+    expect(analyzer.speedsAtIndices()).toEqual([0, 60, 60, 60, 60, 60]);
 });
 
 it("mistakeIndices with no mistakes", () => {
