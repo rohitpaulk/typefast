@@ -11,19 +11,13 @@ class CompletedSnippetAnalyzer {
     }
 
     public averageSpeed(): number {
-        let firstLog = this.keystrokeLogs[0];
-        let lastLog = this.keystrokeLogs[this.keystrokeLogs.length - 1];
+        let firstLog = _.first(this.keystrokeLogs)!;
+        let lastLog = _.last(this.keystrokeLogs)!;
         let firstLogTimestamp = firstLog.timestamp;
         let lastLogTimestamp = lastLog.timestamp;
 
-        let durationMilliseconds =
-            lastLogTimestamp.getTime() - firstLogTimestamp.getTime();
-        let durationMinutes = durationMilliseconds / (1000 * 60);
-
-        let charCount = this.snippetText.length;
-        let cpm = charCount / durationMinutes;
-
-        return Math.round(cpm / 5);
+        let nTypedChars = this.snippetText.length - 1;
+        return calculateWPM(firstLogTimestamp, lastLogTimestamp, nTypedChars);
     }
 
     public speedsAtIndices(): number[] {
@@ -102,13 +96,22 @@ function calculateRollingAvgSpeed(previousTimestamps: Date[]): number {
 
     let lastTimestamp = _.last(previousTimestamps)!;
     let firstTimestamp = _.first(previousTimestamps)!;
+    let charCount = previousTimestamps.length - 1;
 
+    return calculateWPM(firstTimestamp, lastTimestamp, charCount);
+}
+
+function calculateWPM(
+    firstTimestamp: Date,
+    lastTimestamp: Date,
+    nTypedChars: number
+) {
     let durationMilliseconds =
         lastTimestamp.getTime() - firstTimestamp.getTime();
 
     let durationMinutes = durationMilliseconds / (1000 * 60);
 
-    let charCount = previousTimestamps.length - 1;
+    let charCount = nTypedChars;
     let cpm = charCount / durationMinutes;
 
     return Math.round(cpm / 5);
