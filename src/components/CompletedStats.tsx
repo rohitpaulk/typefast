@@ -41,8 +41,7 @@ class CompletedStats extends React.Component<IProps, {}> {
         return (
             <div className="completed-stats-container">
                 Impressive! Your average speed is <b>
-                {this.getAverageSpeed()}</b> words per minute.
-                {this.getMistakeText()}
+                {this.getAverageSpeed()}</b> words per minute. {this.getMistakeText()}
             </div>
         );
     }
