@@ -14,6 +14,16 @@ class SnippetGenerator {
         of success. But it isn't at all. You can be discouraged by failure or you can
         learn from it, so go ahead and make mistakes. Make all you can. Because
         remember that's where you will find success.`,
+
+        `Impossible is just a big word thrown around by small men who find it
+        easier to live in the world they've been given than to explore the power
+        they have to change it. Impossible is not a fact. It's an opinion.
+        Impossible is not a declaration. It's a dare. Impossible is potential.
+        Impossible is temporary. Impossible is nothing.`,
+
+        `It is impossible to live without failing at something, unless you live so
+        cautiously that you might as well not have lived at all - in which case, you
+        fail by default.`,
     ];
 
     public getRandomSnippet(): string {
