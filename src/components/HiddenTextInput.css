@@ -1,5 +1,5 @@
 .hidden-text-input-container {
     position: absolute;
     top: 0px;
-    visibility: hidden;
+    opacity: 0;
 }

@@ -4,7 +4,7 @@ import "./App.css";
 import LiveUI from "./components/LiveUI";
 import CompletedUI from "./components/CompletedUI";
 import { IKeystrokeLog } from "./lib/KeystrokeRecorder";
-import DummyKeystrokeLogsFactory from "./lib/DummyKeystrokeLogsFactory";
+// import DummyKeystrokeLogsFactory from "./lib/DummyKeystrokeLogsFactory";
 
 interface IAppProps {
     snippetText: string;
@@ -21,12 +21,12 @@ class App extends React.Component<IAppProps, IAppState> {
         this.onLiveUIFinish = this.onLiveUIFinish.bind(this);
 
         // Comment this out for a sample 'completed' UI
-        this.state = {
-            state: "completed",
-            keystrokeLogs: new DummyKeystrokeLogsFactory().generate(
-                this.props.snippetText
-            )
-        };
+        // this.state = {
+        //     state: "completed",
+        //     keystrokeLogs: new DummyKeystrokeLogsFactory().generate(
+        //         this.props.snippetText
+        //     )
+        // };
     }
 
     public onLiveUIFinish(keystrokeLogs: IKeystrokeLog[]) {

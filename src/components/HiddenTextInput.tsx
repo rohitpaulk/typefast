@@ -5,21 +5,34 @@ interface IProps {
     onChange: (text: string) => void,
     onCharacterKeypress: (text: string) => void,
     onBackspaceKeypress: () => void,
-    maxLength: number
+    maxLength: number,
 }
 interface IState { text: string; }
 
 class HiddenTextInput extends React.Component<IProps, IState> {
+    textInput: any
+
     constructor(props: IProps) {
         super(props)
         this.state = { text: "" }
         this.handleKeyPress = this.handleKeyPress.bind(this)
         this.handleKeyDown = this.handleKeyDown.bind(this)
+        this.onBlur = this.onBlur.bind(this)
+        this.textInput = React.createRef();
     }
 
     public componentWillMount() {
         document.addEventListener("keydown", this.handleKeyDown);
         document.addEventListener("keypress", this.handleKeyPress);
+    }
+
+    public componentDidMount() {
+        this.textInput.current.focus();
+    }
+
+    public onBlur() {
+        let dis = this;
+        setTimeout(function() { dis.textInput.current.focus() }, 1);
     }
 
     public componentWillUnmount() {
@@ -70,7 +83,10 @@ class HiddenTextInput extends React.Component<IProps, IState> {
 
     public render() {
         return (
-            <div className="hidden-text-input-container" />
+            <input className="hidden-text-input-container"
+                   ref={this.textInput}
+                   onBlur={this.onBlur}
+            />
         );
     }
 }
