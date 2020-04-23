@@ -6,8 +6,7 @@ import CompletedUI from "./components/CompletedUI";
 import { IKeystrokeLog } from "./lib/KeystrokeRecorder";
 // import DummyKeystrokeLogsFactory from "./lib/DummyKeystrokeLogsFactory";
 
-interface IAppProps {
-    snippetText: string;
+interface IAppProps {snippetText: string;
 }
 interface IAppState {
     state: "live" | "completed";
