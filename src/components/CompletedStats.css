@@ -5,6 +5,7 @@
     font-size: 18px;
     animation-duration: 2000ms;
     animation-name: fade-in;
+    color: #333;
 }
 
 @keyframes fade-in {

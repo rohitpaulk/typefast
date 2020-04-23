@@ -19,8 +19,7 @@ identification with the university is perceived as a kind of cultural
 abandonment."`;
 
 // Shorter version for testing
-text = `Encouraging students to think critically -- to ask, "What
-if?" -- is a hallmark of the college writing classroom.`;
+text = `Typefast is a minimalistic distraction-free typing speed test. It tracks your typing speed and mistakes.`;
 
 // // Shortest version for testing
 // text = "hey";
