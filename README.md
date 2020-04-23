@@ -1,3 +1,9 @@
-![screencast](data/screencast.gif)
+<p align="center">
+  <img src="data/screencast.gif">
+</p>
 
-Live demo at https://typefast.rohitpaulk.com/
+<p align="center">
+  <b>
+    <a href="https://typefast.rohitpaulk.com">View live demo</a>
+  </b>
+</p>
