@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/lodash": "^4.14.150",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts-ts": "2.16.0"
